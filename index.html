@@ -79,7 +79,7 @@ function addComment() {
   const distance =
     window.innerWidth + el.offsetWidth + 100;
 
-  const animation = el.animate(
+  el.animate(
     [
       { transform: "translateX(0)" },
       { transform: "translateX(-" + distance + "px)" }
@@ -96,13 +96,13 @@ function addComment() {
   }, 9000);
 }
 
-/* initial comments */
-for (let i = 0; i < 12; i++) {
-  setTimeout(addComment, i * 300);
+/* gentle startup */
+for (let i = 0; i < 4; i++) {
+  setTimeout(addComment, i * 900);
 }
 
-/* slower steady flow */
-setInterval(addComment, 900);
+/* slower ongoing flow */
+setInterval(addComment, 1800);
 
 </script>
 
