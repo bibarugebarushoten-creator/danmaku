@@ -2,43 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Danmaku</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Danmaku Overlay</title>
+
   <style>
     html, body {
-      height: 100%;
       margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
       background: transparent;
+      overflow: hidden;
     }
 
-    /* The overlay stage: transparent, but with a faint outline so you can see it */
-    #box {
+    #danmaku-stage {
       position: relative;
+      width: 100vw;
       height: 260px;
       overflow: hidden;
-      border-radius: 16px;
-      background: transparent;              /* keep overlay transparent */
-      outline: 1px solid rgba(255,255,255,0.18); /* faint boundary */
-    }
-
-    .dm {
-      position: absolute;
-      right: -30%;
-      white-space: nowrap;
-      font: 800 22px/1.2 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      color: #fff;
-      text-shadow: 0 2px 10px rgba(0,0,0,.85);
-      will-change: transform;
-      animation: fly linear var(--dur) forwards;
+      background: transparent;
       pointer-events: none;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    @keyframes fly {
-      from { transform: translateX(0); }
-      to   { transform: translateX(calc(-140vw - 100%)); }
-    }
-
-    /* A readable “control bar” that’s NOT transparent */
-    .uiWrap {
+    .danmaku {
       position: absolute;
-      left
+      right: -100%;
+      white-space: nowrap;
+      color: #000;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1;
+      text-shadow:
+        1px 1px 0 rgba(255,255,255,0.8),
+        -1px -1px 0 rgba(255,255,255,0.8);
+      animation-name: fly-across;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fly-across {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(calc(-100vw - 120%));
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="danmaku-stage"></div>
+
+  <script>
+    const comments = [
+      "japanese music 4 lyfeeee",
+      "東京ライブハウス案内",
+      "new indie discoveries",
+      "Vocaloid history",
+      "scene notes",
+      "officialgf.com",
+      "dig deeper",
+      "lets share earphones",
+      "Tokyo underground",
+      "artist archives",
+      "live reports",
+      "インディーズ",
+      "music culture journal",
+      "whatcha listening too?"
+    ];
+
+    const stage = document.getElementById("danmaku-stage");
+
+    function createDanmaku() {
+      const comment = document.createElement("div");
+      comment.className = "danmaku";
+      comment.textContent = comments[Math.floor(Math.random() * comments.length)];
+
+      const stageHeight = stage.offsetHeight;
+      const top = Math.random() * (stageHeight - 30);
+
+      comment.style.top = top + "px";
+      comment.style.animationDuration = (8 + Math.random() * 6) + "s";
+      comment.style.fontSize = (15 + Math.random() * 8) + "px";
+
+      stage.appendChild(comment);
+
+      comment.addEventListener("animationend", () => {
+        comment.remove();
+      });
+    }
+
+    setInterval(createDanmaku, 700);
+
+    for (let i = 0; i < 8; i++) {
+      setTimeout(createDanmaku, i * 300);
+    }
+  </script>
+</body>
+</html>
