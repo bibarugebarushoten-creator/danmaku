@@ -1,63 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Danmaku Overlay</title>
+<meta charset="utf-8">
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      overflow: hidden;
-    }
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
 
-    #danmaku-stage {
-      position: relative;
-      width: 100vw;
-      height: 260px;
-      overflow: hidden;
-      background: transparent;
-      pointer-events: none;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+#danmaku {
+  position: relative;
+  width: 100vw;
+  height: 260px;
+  overflow: hidden;
+  background: transparent;
+}
 
-    .danmaku {
-      position: absolute;
-      right: -100%;
-      white-space: nowrap;
-      color: #000;
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 1;
-      text-shadow:
-        1px 1px 0 rgba(255,255,255,0.8),
-        -1px -1px 0 rgba(255,255,255,0.8);
-      animation-name: fly-across;
-      animation-timing-function: linear;
-      animation-fill-mode: forwards;
-    }
+.comment {
+  position: absolute;
+  white-space: nowrap;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px white;
+  animation: moveLeft linear forwards;
+}
 
-    @keyframes fly-across {
-      from {
-        transform: translateX(0);
-      }
-      to {
-        transform: translateX(calc(-100vw - 120%));
-      }
-    }
-  </style>
+@keyframes moveLeft {
+  from {
+    transform: translateX(100vw);
+  }
+
+  to {
+    transform: translateX(-120%);
+  }
+}
+</style>
 </head>
 
 <body>
-  <div id="danmaku-stage"></div>
 
-  <script>
-    const comments = [
-      "japanese music 4 lyfeeee",
+<div id="danmaku"></div>
+
+<script>
+const comments = [
+   "japanese music 4 lyfeeee",
       "東京ライブハウス案内",
       "new indie discoveries",
       "ｗｗｗｗｗ",
@@ -74,11 +64,12 @@
       "ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!",
       "music culture journal",
       "whatcha listening to?"
-    ];
+];
 
-   const stage = document.getElementById("danmaku");
+const stage = document.getElementById("danmaku");
 
 function addComment() {
+
   const el = document.createElement("div");
 
   el.className = "comment";
@@ -87,23 +78,30 @@ function addComment() {
     comments[Math.floor(Math.random() * comments.length)];
 
   el.style.top =
-    Math.random() * 240 + "px";
+    Math.random() * 230 + "px";
+
+  el.style.left =
+    Math.random() * 200 + "px";
 
   el.style.animationDuration =
-    (5 + Math.random() * 3) + "s";
+    (2 + Math.random() * 2) + "s";
 
   stage.appendChild(el);
 
   setTimeout(() => {
     el.remove();
-  }, 9000);
+  }, 5000);
 }
 
-/* INSTANT BURST ON PAGE LOAD */
-for (let i = 0; i < 25; i++) {
-  setTimeout(addComment, i * 60);
+/* HUGE INSTANT BURST */
+for (let i = 0; i < 40; i++) {
+  addComment();
 }
 
 /* CONTINUOUS FLOW */
-setInterval(addComment, 180);
+setInterval(addComment, 120);
+
 </script>
+
+</body>
+</html>
