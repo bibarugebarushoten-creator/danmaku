@@ -33,54 +33,59 @@ html, body {
 </head>
 
 <body>
+
 <div id="danmaku"></div>
 
 <script>
 const comments = [
   "japanese music 4 lyfeeee",
-      "東京ライブハウス案内",
-      "new indie discoveries",
-      "ｗｗｗｗｗ",
-      "scene notes",
-      "きたあああああ",
-      "dig deeper",
-      "lets share earphones",
-      "tokyo underground",
-      "神曲",
-      "artist archives",
-      "(´･ᴗ･ )",
-      "88888888888",
-      "live reports",
-      "ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!",
-      "music culture journal",
-      "whatcha listening to?"
-
+  "東京ライブハウス案内",
+  "new indie discoveries",
+  "ｗｗｗｗｗ",
+  "scene notes",
+  "きたあああああ",
+  "dig deeper",
+  "lets share earphones",
+  "tokyo underground",
+  "神曲",
+  "artist archives",
+  "(´･ᴗ･ )",
+  "88888888888",
+  "live reports",
+  "ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!",
+  "music culture journal",
+  "whatcha listening to?"
 ];
 
 const stage = document.getElementById("danmaku");
 
 function addComment() {
+
   const el = document.createElement("div");
+
   el.className = "comment";
-  el.textContent = comments[Math.floor(Math.random() * comments.length)];
+
+  el.textContent =
+    comments[Math.floor(Math.random() * comments.length)];
 
   const y = Math.random() * 220;
-  const duration = 4000 + Math.random() * 3000;
 
   el.style.top = y + "px";
+
   el.style.left = window.innerWidth + "px";
 
   stage.appendChild(el);
 
-  const distance = window.innerWidth + el.offsetWidth + 50;
+  const distance =
+    window.innerWidth + el.offsetWidth + 100;
 
-  el.animate(
+  const animation = el.animate(
     [
       { transform: "translateX(0)" },
       { transform: "translateX(-" + distance + "px)" }
     ],
     {
-      duration: duration,
+      duration: 9000,
       easing: "linear",
       fill: "forwards"
     }
@@ -88,16 +93,18 @@ function addComment() {
 
   setTimeout(() => {
     el.remove();
-  }, duration);
+  }, 9000);
 }
 
-/* immediate visible comments */
-for (let i = 0; i < 25; i++) {
-  setTimeout(addComment, i * 60);
+/* initial comments */
+for (let i = 0; i < 12; i++) {
+  setTimeout(addComment, i * 300);
 }
 
-/* continuous comments */
-setInterval(addComment, 200);
+/* slower steady flow */
+setInterval(addComment, 900);
+
 </script>
+
 </body>
 </html>
