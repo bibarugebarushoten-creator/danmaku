@@ -2,13 +2,14 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background: transparent;
+  overflow: hidden;
 }
 
 #danmaku {
@@ -17,6 +18,7 @@ html, body {
   height: 260px;
   overflow: hidden;
   background: transparent;
+  font-family: Arial, sans-serif;
 }
 
 .comment {
@@ -26,28 +28,16 @@ html, body {
   font-size: 24px;
   font-weight: bold;
   text-shadow: 1px 1px 2px white;
-  animation: moveLeft linear forwards;
-}
-
-@keyframes moveLeft {
-  from {
-    transform: translateX(100vw);
-  }
-
-  to {
-    transform: translateX(-120%);
-  }
 }
 </style>
 </head>
 
 <body>
-
 <div id="danmaku"></div>
 
 <script>
 const comments = [
-   "japanese music 4 lyfeeee",
+  "japanese music 4 lyfeeee",
       "東京ライブハウス案内",
       "new indie discoveries",
       "ｗｗｗｗｗ",
@@ -64,44 +54,50 @@ const comments = [
       "ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!",
       "music culture journal",
       "whatcha listening to?"
+
 ];
 
 const stage = document.getElementById("danmaku");
 
 function addComment() {
-
   const el = document.createElement("div");
-
   el.className = "comment";
+  el.textContent = comments[Math.floor(Math.random() * comments.length)];
 
-  el.textContent =
-    comments[Math.floor(Math.random() * comments.length)];
+  const y = Math.random() * 220;
+  const duration = 4000 + Math.random() * 3000;
 
-  el.style.top =
-    Math.random() * 230 + "px";
-
-  el.style.left =
-    Math.random() * 200 + "px";
-
-  el.style.animationDuration =
-    (2 + Math.random() * 2) + "s";
+  el.style.top = y + "px";
+  el.style.left = window.innerWidth + "px";
 
   stage.appendChild(el);
 
+  const distance = window.innerWidth + el.offsetWidth + 50;
+
+  el.animate(
+    [
+      { transform: "translateX(0)" },
+      { transform: "translateX(-" + distance + "px)" }
+    ],
+    {
+      duration: duration,
+      easing: "linear",
+      fill: "forwards"
+    }
+  );
+
   setTimeout(() => {
     el.remove();
-  }, 5000);
+  }, duration);
 }
 
-/* HUGE INSTANT BURST */
-for (let i = 0; i < 40; i++) {
-  addComment();
+/* immediate visible comments */
+for (let i = 0; i < 25; i++) {
+  setTimeout(addComment, i * 60);
 }
 
-/* CONTINUOUS FLOW */
-setInterval(addComment, 120);
-
+/* continuous comments */
+setInterval(addComment, 200);
 </script>
-
 </body>
 </html>
