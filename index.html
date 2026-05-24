@@ -73,35 +73,37 @@
       "live reports",
       "ｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!",
       "music culture journal",
-      "whatcha listening too?"
+      "whatcha listening to?"
     ];
 
-    const stage = document.getElementById("danmaku-stage");
+   const stage = document.getElementById("danmaku");
 
-    function createDanmaku() {
-      const comment = document.createElement("div");
-      comment.className = "danmaku";
-      comment.textContent = comments[Math.floor(Math.random() * comments.length)];
+function addComment() {
+  const el = document.createElement("div");
 
-      const stageHeight = stage.offsetHeight;
-      const top = Math.random() * (stageHeight - 30);
+  el.className = "comment";
 
-      comment.style.top = top + "px";
-      comment.style.animationDuration = (8 + Math.random() * 6) + "s";
-      comment.style.fontSize = (15 + Math.random() * 8) + "px";
+  el.textContent =
+    comments[Math.floor(Math.random() * comments.length)];
 
-      stage.appendChild(comment);
+  el.style.top =
+    Math.random() * 240 + "px";
 
-      comment.addEventListener("animationend", () => {
-        comment.remove();
-      });
-    }
+  el.style.animationDuration =
+    (5 + Math.random() * 3) + "s";
 
-    setInterval(createDanmaku, 700);
+  stage.appendChild(el);
 
-    for (let i = 0; i < 8; i++) {
-      setTimeout(createDanmaku, i * 300);
-    }
-  </script>
-</body>
-</html>
+  setTimeout(() => {
+    el.remove();
+  }, 9000);
+}
+
+/* INSTANT BURST ON PAGE LOAD */
+for (let i = 0; i < 25; i++) {
+  setTimeout(addComment, i * 60);
+}
+
+/* CONTINUOUS FLOW */
+setInterval(addComment, 180);
+</script>
